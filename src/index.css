@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  /* Base */
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+
+  /* Brand */
+  --color-primary: #dc143c;
+  --color-primary-foreground: #ffffff;
+
+  /* Surfaces */
+  --color-card: #111111;
+  --color-secondary: #1c1c1c;
+  --color-secondary-foreground: #ffffff;
+
+  /* Steel Gray */
+  --color-muted: #4a4a4a;
+  --color-muted-foreground: #a7a7a7;
+
+  /* UI */
+  --color-border: #3a3a3a;
+  --color-highlight: #dc143c;
+  --color-surface: rgba(74, 74, 74, 0.25);
+
+  --radius: 0.75rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: "Inter", sans-serif;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  .logo {
+    height: 80px;
+    width: auto;
+  }
+
+  .font-serif {
+    font-family: "Playfair Display", serif;
+  }
+}
+
+@layer components {
+  .glass {
+    background-color: color-mix(in srgb, var(--color-surface) 50%, transparent);
+    backdrop-filter: blur(16px);
+    border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+  }
+
+  .glass-strong {
+    background-color: rgba(5, 8, 22, 0.92);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border: 1px solid
+      color-mix(in srgb, var(--color-primary) 25%, var(--color-border));
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  .glow-text {
+    text-shadow: 0 0 30px
+      color-mix(in srgb, var(--color-primary) 50%, transparent);
+  }
+
+  .glow-border {
+    box-shadow:
+      0 0 30px color-mix(in srgb, var(--color-primary) 20%, transparent),
+      inset 0 0 20px color-mix(in srgb, var(--color-primary) 5%, transparent);
+  }
+}
+
+@layer utilities {
+  @keyframes border-flow {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .animated-border {
+    background: linear-gradient(
+      90deg,
+      var(--color-border) 0%,
+      var(--color-border) 40%,
+      #dc143c 48%,
+      #d20cbe 50%,
+      #dc143c 52%,
+      var(--color-border) 60%,
+      var(--color-border) 100%
+    );
+    background-size: 200% 100%;
+    animation: border-flow 4.7s linear infinite;
+    transition:
+      box-shadow 400ms ease,
+      transform 400ms ease;
+  }
+
+  .animated-border:hover {
+    animation-duration: 3s;
+    box-shadow: 0 0 20px color-mix(in srgb, #dc143c 35%, transparent);
+    transform: translateY(-1px);
+  }
+
+  .timeline-glow {
+    box-shadow:
+      0 0 40px color-mix(in srgb, var(--color-primary) 35%, transparent),
+      0 0 80% color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
+
+  .animate-marquee {
+    animation: marquee 40s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animated-border {
+      animation: none;
+      background: #dc143c;
+    }
+  }
+}
