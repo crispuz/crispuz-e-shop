@@ -1,11 +1,26 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "./Button";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <nav className="fixed left-0 top-0 right-0 z-50 bg-transparent">
-      <div className="container mx-auto px-6 flex items-center justify-between py-4 border border-border/20  rounded-full">
+      <div
+        className={`container mx-auto px-6 flex items-center justify-between py-3 border border-border/20  rounded-full ${isScrolled ? "glass-strong rounded-3xl" : ""}`}
+      >
         {/* logo */}
         <motion.div
           className="text-lg"
@@ -23,18 +38,18 @@ export default function Navbar() {
         <div className="flex gap-2 border border-border/20 text-muted-foreground rounded-full">
           <Link
             to="/"
-            className="px-2 border border-border/40 rounded-full hover:bg-primary/50 hover:border-primary transition-all duration-300"
+            className="px-2 border border-border/40 rounded-full hover:bg-primary/50 hover:border-primary transition-all duration-300 active:border-primary outline-none"
           >
-            Homepage
+            Home
           </Link>
           <Link
-            to="/"
+            to="/checkout"
             className="px-2 border border-border/40 rounded-full hover:bg-primary/50 hover:border-primary transition-all duration-300"
           >
-            Products
+            Checkout
           </Link>
           <Link
-            to="/"
+            to="/cart"
             className="px-2 border border-border/40 rounded-full hover:bg-primary/50 hover:border-primary transition-all duration-300"
           >
             Cart
