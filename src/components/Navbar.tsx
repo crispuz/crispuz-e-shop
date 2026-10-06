@@ -19,7 +19,7 @@ export default function Navbar() {
   return (
     <nav className="fixed left-0 top-0 right-0 z-50 bg-transparent">
       <div
-        className={`container mx-auto px-6 flex items-center justify-between py-3 border border-border/20  rounded-full ${isScrolled ? "glass-strong rounded-3xl" : ""}`}
+        className={`container mx-auto px-6 flex items-center justify-between py-3 border border-border/20  rounded-full ${isScrolled ? "glass-strong " : ""}`}
       >
         {/* logo */}
         <motion.div

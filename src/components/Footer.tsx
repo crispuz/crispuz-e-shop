@@ -27,12 +27,17 @@ export default function Footer() {
             const Icon = link.icon;
 
             return (
-              <div key={link.id}>
+              <a
+                key={link.id}
+                href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
+              >
                 <div>{link.label}</div>
                 <div>
                   <Icon />
                 </div>
-              </div>
+              </a>
             );
           })}
         </div>

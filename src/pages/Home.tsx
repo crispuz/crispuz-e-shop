@@ -11,7 +11,7 @@ export default function Home() {
       initial={"hidden"}
       animate={"visible"}
       id="home"
-      className="bg-[url('./assets/showcase.png')] bg-cover bg-no-repeate"
+      className="bg-[url('./assets/showcase.png')] bg-cover bg-no-repeat"
     >
       <div className="relative min-h-screen overflow-hidden py-32 px-4 bg-background/80 backdrop-blur-xs">
         <div className="container mx-auto grid items-center inset-0 gap-12 px-4 lg:grid-cols-2">
@@ -78,13 +78,13 @@ export default function Home() {
               />
               <motion.div
                 variants={fadeInUp}
-                transition={{ delay: 100 * 0.1 }}
+                transition={{ delay: 0.1 }}
                 className="relative glass border border-border/20 glow-border rounded-3xl my-4 p-6"
               >
                 <div className="absolute left-2 top-7.5 z-10 h-3 w-3 bg-primary rounded-full animate-pulse" />
                 <p className="text-lg mb-3 text-muted-foreground">
-                  Available now, purchase with us now and we deliver at
-                  affodable price.
+                  Available now, purchase with us now and we deliver at an
+                  affordable price.
                 </p>
                 <span className="leading-relaxed tracking-wider flex justify-between mx-8 text-primary items-center">
                   Anywhere <span>.</span> Anytime <span>.</span> Anydevice
