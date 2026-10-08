@@ -4,6 +4,7 @@ import products from "../assets/data";
 import ProductCard from "../components/ProductCard";
 import { useState } from "react";
 import Button from "../components/Button";
+import { ChevronDown } from "lucide-react";
 
 type Product = (typeof products)[number];
 const categories = ["All", ...new Set(products.map((product) => product.category))];
@@ -40,29 +41,42 @@ export default function Checkout({ onAddToCart }: CheckoutProps) {
           </motion.h2>
 
           {/* Categories */}
-          <div className="lg:flex lg:justify-between items-center">
+          <div className="flex min-w-0 flex-col items-start gap-3 lg:flex-row lg:items-center lg:justify-between">
             <motion.h3
               variants={fadeInUp}
-              className="text-secondary-foreground text-2xl leading-relaxed tracking-wide"
+              className="text-secondary-foreground text-xl leading-relaxed tracking-wide sm:text-2xl"
             >
               You can explore products by category:
             </motion.h3>
-            <div className="flex gap-4 justify-end mt-2 border border-border/20 rounded-3xl px-4">
-              {categories.map((category) => (
-                <motion.button
-                  variants={fadeInUp}
-                  key={category}
-                  type="button"
-                  aria-pressed={selectedCategory === category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`glass border border-surface/30 rounded-3xl md:px-3 hover:bg-primary/30 px-1 text-muted-foreground text-sm ${
-                    selectedCategory === category ? "bg-primary/30" : ""
-                  }`}
-                >
-                  {category}
-                </motion.button>
-              ))}
-            </div>
+            <motion.div
+              variants={fadeInUp}
+              className="relative w-full sm:max-w-xs lg:w-64"
+            >
+              <label htmlFor="category-filter" className="sr-only">
+                Filter products by category
+              </label>
+              <select
+                id="category-filter"
+                value={selectedCategory}
+                onChange={(event) => setSelectedCategory(event.target.value)}
+                className="glass w-full appearance-none rounded-xl border border-border/30 px-4 py-3 pr-10 text-sm text-foreground outline-none transition-colors hover:border-primary/50 focus:border-primary"
+              >
+                {categories.map((category) => (
+                  <option
+                    key={category}
+                    value={category}
+                    className="bg-card text-foreground"
+                  >
+                    {category === "All" ? "All categories" : category}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                aria-hidden="true"
+                size={18}
+                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground"
+              />
+            </motion.div>
           </div>
         </motion.div>
 
