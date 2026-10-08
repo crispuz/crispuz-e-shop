@@ -44,13 +44,14 @@ export default function SignUp() {
             <div className="bg-transparent p-4 border border-border/10 rounded-2xl space-y-4">
               {/* Full Name */}
               <div className="grid">
-                <label>Full Name:</label>
+                <label htmlFor="fullname">Full Name:</label>
 
                 <input
                   className="font-serif italic text-lg md:textxl lg:text-2xl text-muted bg-surface
                   border border-border/50 m-2 rounded-md outline-none
                   hover:border-primary/50 focus:border-primary
                   focus:text-muted-foreground"
+                  id="fullname"
                   {...register("fullname", {
                     required: "Full name is required",
                     minLength: {
@@ -71,13 +72,14 @@ export default function SignUp() {
 
               {/* Username */}
               <div className="grid">
-                <label>Username:</label>
+                <label htmlFor="username">Username:</label>
 
                 <input
                   className="font-serif italic text-lg md:textxl lg:text-2xl text-muted bg-surface
                   border border-border/50 m-2 rounded-md outline-none
                   hover:border-primary/50 focus:border-primary
                   focus:text-muted-foreground"
+                  id="username"
                   {...register("username", {
                     required: "Username is required",
                     minLength: {
@@ -98,13 +100,14 @@ export default function SignUp() {
 
               {/* Email */}
               <div className="grid">
-                <label>Email:</label>
+                <label htmlFor="email">Email:</label>
 
                 <input
                   className="font-serif italic text-lg md:textxl lg:text-2xl text-muted bg-surface
                   border border-border/50 m-2 rounded-md outline-none
                   hover:border-primary/50 focus:border-primary
                   focus:text-muted-foreground"
+                  id="email"
                   {...register("email", {
                     required: "Email is required",
                     pattern: {
@@ -125,13 +128,14 @@ export default function SignUp() {
 
               {/* Password */}
               <div className="grid">
-                <label>Password:</label>
+                <label htmlFor="password">Password:</label>
 
                 <input
                   className="font-serif italic text-lg md:textxl lg:text-2xl text-muted bg-surface
                   border border-border/50 m-2 rounded-md outline-none
                   hover:border-primary/50 focus:border-primary
                   focus:text-muted-foreground"
+                  id="password"
                   {...register("password", {
                     required: "Password is required",
                     minLength: {
@@ -140,7 +144,7 @@ export default function SignUp() {
                     },
                     maxLength: {
                       value: 16,
-                      message: "Password must be less than 16 characters",
+                      message: "Password must be at most 16 characters",
                     },
                   })}
                   placeholder="Enter Your Password.."
@@ -156,13 +160,14 @@ export default function SignUp() {
 
               {/* Confirm Password */}
               <div className="grid">
-                <label>Confirm Password:</label>
+                <label htmlFor="confirmPassword">Confirm Password:</label>
 
                 <input
                   className="font-serif italic text-lg md:textxl lg:text-2xl text-muted bg-surface
                   border border-border/50 m-2 rounded-md outline-none
                   hover:border-primary/50 focus:border-primary
                   focus:text-muted-foreground"
+                  id="confirmPassword"
                   {...register("confirmPassword", {
                     required: "Please confirm your password",
                     validate: (value) =>
