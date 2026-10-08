@@ -1,13 +1,20 @@
+import type { FormEvent } from "react";
 import Button from "../components/Button";
 import { motion } from "framer-motion";
 
 export default function Auth() {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    alert("submitted ");
+  }
+
   return (
     <section id="auth" className="overflow-hidden relative py-32">
       <div className="grid items-center justify-center">
         {/* Login Form */}
         <div className="container p-4 m-4">
           <form
+            onSubmit={handleSubmit}
             className="border border-primary/10 glass p-6 m-4 md:p-12 space-y-6 rounded-3xl 
             grid items-center glow-border "
           >

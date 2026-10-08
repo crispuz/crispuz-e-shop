@@ -58,7 +58,7 @@
   }
 
   .glass-strong {
-    background-color: rgba(5, 8, 22, 0.92);
+    background-color: rgb(1, 2, 6);
     backdrop-filter: blur(24px) saturate(140%);
     -webkit-backdrop-filter: blur(24px) saturate(140%);
     border: 1px solid
@@ -124,7 +124,7 @@
   }
 
   .animate-marquee {
-    animation: marquee 40s linear infinite;
+    animation: marquee 25s linear infinite;
   }
 
   @media (prefers-reduced-motion: reduce) {
