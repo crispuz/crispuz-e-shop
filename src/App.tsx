@@ -1,10 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Auth from "./pages/Auth";
 import Checkout from "./pages/Checkout";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Cart from "./pages/Cart";
+import SignUp from "./pages/SignUp";
+import LogIn from "./pages/LogIn";
 
 export default function App() {
   return (
@@ -13,9 +14,11 @@ export default function App() {
       <main className="min-h-screen overflow-x-hidden">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/auth" element={<Auth />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/signup" element={<SignUp />} />
+
           <Route
             path="*"
             element={

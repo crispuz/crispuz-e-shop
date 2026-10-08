@@ -1,7 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "./Button";
 import { useEffect, useState } from "react";
+
+const links = [
+  { to: "/", label: "Home" },
+  { to: "/checkout", label: "Products" },
+  { to: "/cart", label: "Cart" },
+];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -36,29 +42,53 @@ export default function Navbar() {
 
         {/* Links */}
         <div className="flex gap-2 border border-border/20 text-muted-foreground rounded-full">
-          <Link
+          {/* <Link
             to="/"
-            className="px-2 border border-border/40 rounded-full hover:bg-primary/50 hover:border-primary transition-all duration-300 active:border-primary outline-none"
+            className=" relative group px-2 border border-border/20 rounded-2xl  transition-all duration-300 active:border-primary outline-none"
           >
             Home
+            <span className="absolute bottom-0 left-0 h-0.5 w-full origin-center scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
           </Link>
           <Link
             to="/checkout"
-            className="px-2 border border-border/40 rounded-full hover:bg-primary/50 hover:border-primary transition-all duration-300"
+            className="relative group px-2 border border-border/40 rounded-2xl transition-all duration-300"
           >
             Checkout
+            <span className="absolute bottom-0 left-0 h-0.5 w-full origin-center scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
           </Link>
           <Link
             to="/cart"
-            className="px-2 border border-border/40 rounded-full hover:bg-primary/50 hover:border-primary transition-all duration-300"
+            className="relative group px-2 border border-border/40 rounded-2xl transition-all duration-300"
           >
             Cart
-          </Link>
+            <span className="absolute bottom-0 left-0 h-0.5 w-full origin-center scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
+          </Link> */}
+          {links.map((link, idx) => (
+            <NavLink
+              key={idx}
+              to={link.to}
+              end={link.to === "/"}
+              className="relative group px-2 border border-border/20 rounded-2xl  transition-all duration-300 active:border-primary outline-none"
+            >
+              {({ isActive }) => (
+                <>
+                  <span>{link.label}</span>
+                  <span
+                    className={`absolute bottom-0 left-0 h-0.5 w-full origin-center transition-transform duration-300 ${
+                      isActive
+                        ? "scale-x-100  bg-primary"
+                        : "scale-x-0 group-hover:scale-x-100 bg-primary/50"
+                    }`}
+                  />
+                </>
+              )}
+            </NavLink>
+          ))}
         </div>
 
         {/* Auth */}
         <div className="text-sm text-muted-foreground">
-          <Link to="/auth" className="px-2">
+          <Link to="/login" className="px-2">
             <Button size="sm">Login</Button>
           </Link>
           {/* <Link to="/auth">
