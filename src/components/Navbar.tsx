@@ -10,6 +10,7 @@ const links = [
   { to: "/cart", label: "Cart" },
 ];
 
+/** Renders navigation links and login or logout controls for the current session. */
 export default function Navbar() {
   const { user, warning, logOut } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);

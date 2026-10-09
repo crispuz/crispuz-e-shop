@@ -10,6 +10,7 @@ interface LoginFormData {
   password: string;
 }
 
+/** Renders the login form with validation and authentication errors. */
 export default function LogIn() {
   const { logIn } = useAuth();
   const location = useLocation();
@@ -30,6 +31,7 @@ export default function LogIn() {
       ? returnTo
       : "/";
 
+  /** Signs in and navigates to the return destination, or displays the failure. */
   const onSubmit: SubmitHandler<LoginFormData> = async (credentials) => {
     setAuthError(null);
     try {

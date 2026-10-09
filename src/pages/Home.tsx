@@ -4,6 +4,7 @@ import showcase from "../assets/showcase.png";
 import { container, fadeInUp } from "../components/Animations";
 import { Link } from "react-router-dom";
 
+/** Renders the shop landing page with a link to browse products at checkout. */
 export default function Home() {
   return (
     <motion.section

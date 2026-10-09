@@ -16,6 +16,7 @@ interface CheckoutProps {
   onAddToCart: (product: Product) => void;
 }
 
+/** Renders the product catalog, category filters, details, and cart confirmations. */
 export default function Checkout({ onAddToCart }: CheckoutProps) {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ export default function Checkout({ onAddToCart }: CheckoutProps) {
       ? products
       : products.filter((product) => product.category === selectedCategory);
 
+  /** Adds a product and shows confirmation, or sends signed-out visitors to sign up. */
   const handleAddToCart = (product: Product) => {
     if (!user) {
       navigate("/signup", { state: { returnTo: "/checkout" } });

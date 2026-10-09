@@ -13,6 +13,7 @@ import AuthProvider from "./context/AuthContext";
 type Product = (typeof products)[number];
 type CartItem = { product: Product; quantity: number };
 
+/** Renders the shop routes within the authentication provider and manages cart state. */
 export default function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 

@@ -13,6 +13,7 @@ interface SignUpFormData {
   confirmPassword: string;
 }
 
+/** Renders the sign-up form with field validation and account creation errors. */
 export default function SignUp() {
   const { signUp } = useAuth();
   const location = useLocation();
@@ -27,6 +28,7 @@ export default function SignUp() {
 
   const password = useWatch({ control, name: "password" });
 
+  /** Creates an account and forwards navigation state to login, or displays the failure. */
   const onSubmit: SubmitHandler<SignUpFormData> = async (credentials) => {
     setAuthError(null);
     try {
