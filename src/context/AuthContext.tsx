@@ -173,7 +173,21 @@ function AuthProvider({ children }: { children: ReactNode }) {
       salt: encodeBase64(salt),
       passwordHash: await hashPassword(password, salt),
     };
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify([...accounts, account]));
+    const latestAccounts = readAccounts();
+    if (
+      latestAccounts.some(
+        (savedAccount) =>
+          savedAccount.username.toLocaleLowerCase() === normalizedUsername ||
+          savedAccount.email.toLocaleLowerCase() === normalizedEmail,
+      )
+    ) {
+      throw new Error("An account with that username or email already exists.");
+    }
+
+    localStorage.setItem(
+      USERS_STORAGE_KEY,
+      JSON.stringify([...latestAccounts, account]),
+    );
   }
 
   async function logIn({
