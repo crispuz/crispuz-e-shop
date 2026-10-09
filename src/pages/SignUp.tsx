@@ -1,7 +1,9 @@
 import Button from "../components/Button";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
+import { useState } from "react";
+import { useAuth } from "../context/useAuth";
 
 interface SignUpFormData {
   fullname: string;
@@ -11,7 +13,12 @@ interface SignUpFormData {
   confirmPassword: string;
 }
 
+/** Renders the sign-up form with field validation and account creation errors. */
 export default function SignUp() {
+  const { signUp } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [authError, setAuthError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -21,10 +28,17 @@ export default function SignUp() {
 
   const password = useWatch({ control, name: "password" });
 
-  const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
-    console.log("Sign Up Data:", data);
-
-    alert("Signed Up");
+  /** Creates an account and forwards navigation state to login, or displays the failure. */
+  const onSubmit: SubmitHandler<SignUpFormData> = async (credentials) => {
+    setAuthError(null);
+    try {
+      await signUp(credentials);
+      navigate("/login", { state: location.state });
+    } catch (error) {
+      setAuthError(
+        error instanceof Error ? error.message : "Unable to create your account.",
+      );
+    }
   };
 
   return (
@@ -42,12 +56,18 @@ export default function SignUp() {
             </h2>
 
             <div className="bg-transparent p-4 border border-border/10 rounded-2xl space-y-4">
+              {authError && (
+                <p role="alert" className="text-sm text-red-500">
+                  {authError}
+                </p>
+              )}
+
               {/* Full Name */}
               <div className="grid">
                 <label htmlFor="fullname">Full Name:</label>
 
                 <input
-                  className="font-serif italic text-lg md:textxl lg:text-2xl text-muted bg-surface
+                  className="font-serif italic text-lg md:text-xl lg:text-2xl text-muted bg-surface
                   border border-border/50 m-2 rounded-md outline-none
                   hover:border-primary/50 focus:border-primary
                   focus:text-muted-foreground"
@@ -194,6 +214,7 @@ export default function SignUp() {
               Already have an account.
               <Link
                 to="/login"
+                state={location.state}
                 className="text-primary italic font-bold hover:glow-text px-2"
               >
                 LogIn

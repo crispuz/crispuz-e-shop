@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "./Button";
 import { useEffect, useState } from "react";
+import { useAuth } from "../context/useAuth";
 
 const links = [
   { to: "/", label: "Home" },
@@ -9,7 +10,9 @@ const links = [
   { to: "/cart", label: "Cart" },
 ];
 
+/** Renders navigation links and login or logout controls for the current session. */
 export default function Navbar() {
+  const { user, warning, logOut } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -88,15 +91,29 @@ export default function Navbar() {
 
         {/* Auth */}
         <div className="text-sm text-muted-foreground">
-          <Link to="/login" className="px-2">
-            <Button size="sm">Login</Button>
-          </Link>
+          {user ? (
+            <Button size="sm" onClick={logOut}>
+              Logout
+            </Button>
+          ) : (
+            <Link to="/login" className="px-2">
+              <Button size="sm">Login</Button>
+            </Link>
+          )}
           {/* <Link to="/auth">
             <Button size="sm">
               SignUp
             </Button>
           </Link> */}
         </div>
+        {warning && (
+          <p
+            role="status"
+            className="absolute right-4 top-full mt-2 max-w-xs rounded-xl border border-amber-500/30 bg-card p-3 text-xs text-amber-200 shadow-lg"
+          >
+            {warning}
+          </p>
+        )}
       </div>
     </nav>
   );

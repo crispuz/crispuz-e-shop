@@ -1,10 +1,13 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { container, fadeInUp } from "../components/Animations";
 import products from "../assets/data";
 import ProductCard from "../components/ProductCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
-import { ChevronDown } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
+import { createPortal } from "react-dom";
 
 type Product = (typeof products)[number];
 const categories = ["All", ...new Set(products.map((product) => product.category))];
@@ -13,13 +16,35 @@ interface CheckoutProps {
   onAddToCart: (product: Product) => void;
 }
 
+/** Renders the product catalog, category filters, details, and cart confirmations. */
 export default function Checkout({ onAddToCart }: CheckoutProps) {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [addedProduct, setAddedProduct] = useState<Product | null>(null);
   const visibleProducts =
     selectedCategory === "All"
       ? products
       : products.filter((product) => product.category === selectedCategory);
+
+  /** Adds a product and shows confirmation, or sends signed-out visitors to sign up. */
+  const handleAddToCart = (product: Product) => {
+    if (!user) {
+      navigate("/signup", { state: { returnTo: "/checkout" } });
+      return;
+    }
+
+    onAddToCart(product);
+    setAddedProduct(product);
+  };
+
+  useEffect(() => {
+    if (!addedProduct) return;
+
+    const timeoutId = window.setTimeout(() => setAddedProduct(null), 2800);
+    return () => window.clearTimeout(timeoutId);
+  }, [addedProduct]);
 
   return (
     <motion.section
@@ -92,7 +117,7 @@ export default function Checkout({ onAddToCart }: CheckoutProps) {
                 details="Details"
                 addToCart="Add to Cart"
                 onDetails={() => setSelectedProduct(product)}
-                onAddToCart={() => onAddToCart(product)}
+                onAddToCart={() => handleAddToCart(product)}
               />
             </motion.div>
           ))}
@@ -130,6 +155,41 @@ export default function Checkout({ onAddToCart }: CheckoutProps) {
             <Button onClick={() => setSelectedProduct(null)}>Close</Button>
           </motion.div>
         </div>
+      )}
+      {createPortal(
+        <AnimatePresence>
+          {addedProduct && (
+            <motion.div
+              key={addedProduct.id}
+              role="status"
+              aria-live="polite"
+              initial={{ opacity: 0, y: 24, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 12, scale: 0.98 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="fixed bottom-6 right-6 z-40 flex w-[calc(100%-3rem)] max-w-sm items-start gap-3 rounded-2xl border border-green-500/30 bg-card p-4 shadow-xl shadow-black/30"
+            >
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-500/15 text-green-400">
+                <Check size={20} aria-hidden="true" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="font-semibold text-foreground">
+                  Added to your cart
+                </p>
+                <p className="truncate text-sm text-muted-foreground">
+                  {addedProduct.name}
+                </p>
+              </div>
+              <Link
+                to="/cart"
+                className="shrink-0 text-sm font-medium text-primary hover:underline"
+              >
+                View cart
+              </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body,
       )}
     </motion.section>
   );
