@@ -22,6 +22,7 @@ export interface StoredAccount extends AuthUser {
 
 export interface AuthContextValue {
   user: AuthUser | null;
+  warning: string | null;
   signUp: (credentials: SignUpCredentials) => Promise<void>;
   logIn: (credentials: LoginCredentials) => Promise<void>;
   logOut: () => void;

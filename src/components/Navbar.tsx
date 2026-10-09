@@ -11,7 +11,7 @@ const links = [
 ];
 
 export default function Navbar() {
-  const { user, logOut } = useAuth();
+  const { user, warning, logOut } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -105,6 +105,14 @@ export default function Navbar() {
             </Button>
           </Link> */}
         </div>
+        {warning && (
+          <p
+            role="status"
+            className="absolute right-4 top-full mt-2 max-w-xs rounded-xl border border-amber-500/30 bg-card p-3 text-xs text-amber-200 shadow-lg"
+          >
+            {warning}
+          </p>
+        )}
       </div>
     </nav>
   );

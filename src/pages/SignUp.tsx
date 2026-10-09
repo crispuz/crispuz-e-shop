@@ -212,6 +212,7 @@ export default function SignUp() {
               Already have an account.
               <Link
                 to="/login"
+                state={location.state}
                 className="text-primary italic font-bold hover:glow-text px-2"
               >
                 LogIn

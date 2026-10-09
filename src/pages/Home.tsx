@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Sparkles } from "lucide-react";
-import Button from "../components/Button";
 import showcase from "../assets/showcase.png";
 import { container, fadeInUp } from "../components/Animations";
 import { Link } from "react-router-dom";
@@ -58,10 +57,11 @@ export default function Home() {
 
             {/* CTA */}
             <motion.div variants={fadeInUp} className="mt-10">
-              <Link to="/checkout">
-                <Button size="md" variant="primary">
-                  Discover Now <ArrowUpRight className="h-5 w-5" />
-                </Button>
+              <Link
+                to="/checkout"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-medium text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500 hover:bg-primary/50 hover:text-muted-foreground active:bg-indigo-800"
+              >
+                Discover Now <ArrowUpRight className="h-5 w-5" />
               </Link>
             </motion.div>
           </div>

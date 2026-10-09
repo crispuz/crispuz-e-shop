@@ -144,6 +144,7 @@ function getInitialUser(): AuthUser | null {
 
 function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(getInitialUser);
+  const [warning, setWarning] = useState<string | null>(null);
 
   async function signUp({
     fullname,
@@ -217,17 +218,33 @@ function AuthProvider({ children }: { children: ReactNode }) {
       username: account.username,
       email: account.email,
     };
-    localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(signedInUser));
     setUser(signedInUser);
+    try {
+      localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(signedInUser));
+      setWarning(null);
+    } catch (error) {
+      console.error("Unable to persist the signed-in session.", error);
+      setWarning(
+        "Signed in, but your session could not be saved. You may need to sign in again after refresh.",
+      );
+    }
   }
 
   function logOut(): void {
-    localStorage.removeItem(SESSION_STORAGE_KEY);
     setUser(null);
+    try {
+      localStorage.removeItem(SESSION_STORAGE_KEY);
+      setWarning(null);
+    } catch (error) {
+      console.error("Unable to remove the saved signed-in session.", error);
+      setWarning(
+        "Signed out, but the saved session could not be removed. Refresh may sign you in again.",
+      );
+    }
   }
 
   return (
-    <AuthContext.Provider value={{ user, signUp, logIn, logOut }}>
+    <AuthContext.Provider value={{ user, warning, signUp, logIn, logOut }}>
       {children}
     </AuthContext.Provider>
   );
