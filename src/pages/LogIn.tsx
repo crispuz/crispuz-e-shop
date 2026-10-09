@@ -1,7 +1,9 @@
 import Button from "../components/Button";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import { useState } from "react";
+import { useAuth } from "../context/useAuth";
 
 interface LoginFormData {
   username: string;
@@ -9,16 +11,35 @@ interface LoginFormData {
 }
 
 export default function LogIn() {
+  const { logIn } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [authError, setAuthError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormData>();
+  const returnTo = (
+    location.state as { returnTo?: unknown } | null
+  )?.returnTo;
+  const destination =
+    typeof returnTo === "string" &&
+    returnTo.startsWith("/") &&
+    !returnTo.startsWith("//")
+      ? returnTo
+      : "/";
 
-  const onSubmit: SubmitHandler<LoginFormData> = (data) => {
-    console.log("Login Data:", data);
-
-    alert("Submitted");
+  const onSubmit: SubmitHandler<LoginFormData> = async (credentials) => {
+    setAuthError(null);
+    try {
+      await logIn(credentials);
+      navigate(destination);
+    } catch (error) {
+      setAuthError(
+        error instanceof Error ? error.message : "Unable to sign in.",
+      );
+    }
   };
 
   return (
@@ -36,6 +57,12 @@ export default function LogIn() {
             </h2>
 
             <div className="bg-transparent p-4 border border-border/10 rounded-2xl space-y-4">
+              {authError && (
+                <p role="alert" className="text-sm text-red-500">
+                  {authError}
+                </p>
+              )}
+
               {/* Username */}
               <div className="grid">
                 <label htmlFor="username">Username:</label>

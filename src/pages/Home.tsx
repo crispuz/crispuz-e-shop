@@ -3,6 +3,7 @@ import { ArrowUpRight, Sparkles } from "lucide-react";
 import Button from "../components/Button";
 import showcase from "../assets/showcase.png";
 import { container, fadeInUp } from "../components/Animations";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -57,9 +58,11 @@ export default function Home() {
 
             {/* CTA */}
             <motion.div variants={fadeInUp} className="mt-10">
-              <Button size="md" variant="primary">
-                Discover Now <ArrowUpRight className="h-5 w-5" />
-              </Button>
+              <Link to="/checkout">
+                <Button size="md" variant="primary">
+                  Discover Now <ArrowUpRight className="h-5 w-5" />
+                </Button>
+              </Link>
             </motion.div>
           </div>
 

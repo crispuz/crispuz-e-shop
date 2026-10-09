@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "./Button";
 import { useEffect, useState } from "react";
+import { useAuth } from "../context/useAuth";
 
 const links = [
   { to: "/", label: "Home" },
@@ -10,6 +11,7 @@ const links = [
 ];
 
 export default function Navbar() {
+  const { user, logOut } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -88,9 +90,15 @@ export default function Navbar() {
 
         {/* Auth */}
         <div className="text-sm text-muted-foreground">
-          <Link to="/login" className="px-2">
-            <Button size="sm">Login</Button>
-          </Link>
+          {user ? (
+            <Button size="sm" onClick={logOut}>
+              Logout
+            </Button>
+          ) : (
+            <Link to="/login" className="px-2">
+              <Button size="sm">Login</Button>
+            </Link>
+          )}
           {/* <Link to="/auth">
             <Button size="sm">
               SignUp
