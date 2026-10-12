@@ -1,6 +1,5 @@
 import { ClipboardList } from "lucide-react";
 import { Link, Navigate, useLocation } from "react-router-dom";
-import Button from "../components/Button";
 import { useAuth } from "../context/useAuth";
 
 export default function Orders() {
@@ -36,8 +35,11 @@ export default function Orders() {
         <p className="mb-6 text-muted-foreground">
           When you place an order, it will appear here.
         </p>
-        <Link to="/checkout">
-          <Button>Explore products</Button>
+        <Link
+          to="/checkout"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-medium text-white transition-colors hover:bg-primary/50 hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+        >
+          Explore products
         </Link>
       </div>
     </section>
