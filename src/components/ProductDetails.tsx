@@ -42,6 +42,28 @@ export default function ProductDetails({
             alt={product.name}
             className="aspect-square w-full rounded-2xl bg-surface object-cover"
           />
+          {product.imageAttribution && (
+            <p className="mt-2 text-xs text-muted-foreground">
+              Photo by{" "}
+              <a
+                href={product.imageAttribution.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="underline hover:text-primary"
+              >
+                {product.imageAttribution.creator}
+              </a>{" "}
+              ·{" "}
+              <a
+                href={product.imageAttribution.licenseUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="underline hover:text-primary"
+              >
+                {product.imageAttribution.license}
+              </a>
+            </p>
+          )}
           {gallery.length > 1 && (
             <div className="mt-3 flex gap-3 overflow-x-auto">
               {gallery.map((image, index) => (

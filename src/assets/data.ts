@@ -11,6 +11,12 @@ export interface Product {
   category: string;
   image: string;
   images: string[];
+  imageAttribution?: {
+    creator: string;
+    sourceUrl: string;
+    license: string;
+    licenseUrl: string;
+  };
   stock: number;
   rating: number;
   reviewCount: number;
@@ -1498,10 +1504,17 @@ const products: Product[] = [
     currency: "TZS",
     category: "Cameras",
     image:
-      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Canon_RF_50mm_F1.8_STM.jpg/960px-Canon_RF_50mm_F1.8_STM.jpg",
     images: [
-      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Canon_RF_50mm_F1.8_STM.jpg/960px-Canon_RF_50mm_F1.8_STM.jpg",
     ],
+    imageAttribution: {
+      creator: "Henry Söderlund",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:Canon_RF_50mm_F1.8_STM.jpg",
+      license: "CC BY 2.0",
+      licenseUrl: "https://creativecommons.org/licenses/by/2.0/",
+    },
     stock: 0,
     rating: 4.6,
     reviewCount: 91,

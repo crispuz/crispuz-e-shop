@@ -68,6 +68,7 @@ export default function ProductCatalog({
           <div key={product.id}>
             <ProductCard
               image={product.image}
+              imageAttribution={product.imageAttribution}
               productName={product.name}
               description={product.description}
               price={product.price}

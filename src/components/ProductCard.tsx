@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Button from "./Button";
+import type { Product } from "../assets/data";
 
 interface ProductCardProps {
   image: string;
+  imageAttribution?: Product["imageAttribution"];
   productName: string;
   description: string;
   price: number;
@@ -17,6 +19,7 @@ interface ProductCardProps {
 
 export default function ProductCard({
   image,
+  imageAttribution,
   productName,
   description,
   price,
@@ -106,6 +109,29 @@ export default function ProductCard({
           </span>
         </div>
       </Link>
+
+      {imageAttribution && (
+        <p className="px-5 text-xs text-muted-foreground">
+          Photo by{" "}
+          <a
+            href={imageAttribution.sourceUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="underline hover:text-primary"
+          >
+            {imageAttribution.creator}
+          </a>{" "}
+          ·{" "}
+          <a
+            href={imageAttribution.licenseUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="underline hover:text-primary"
+          >
+            {imageAttribution.license}
+          </a>
+        </p>
+      )}
 
       <div className="px-5 pb-5">
         {/* Buttons */}
