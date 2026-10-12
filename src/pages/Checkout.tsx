@@ -21,6 +21,10 @@ export default function Checkout({ onAddToCart }: CheckoutProps) {
   const [addedProduct, setAddedProduct] = useState<Product | null>(null);
   const selectedProduct = products.find((product) => String(product.id) === id);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
   const handleAddToCart = (product: Product) => {
     if (!user) {
       navigate("/signup", { state: { returnTo: location.pathname } });

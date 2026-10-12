@@ -1326,9 +1326,9 @@ const products: Product[] = [
     currency: "TZS",
     category: "Cameras",
     image:
-      "https://images.unsplash.com/photo-1502920917128-1c1a1c7e6f?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80",
     images: [
-      "https://images.unsplash.com/photo-1502920917128-1c1a1c7e6f?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80",
     ],
     stock: 18,
     rating: 4.7,
@@ -1498,9 +1498,9 @@ const products: Product[] = [
     currency: "TZS",
     category: "Cameras",
     image:
-      "https://images.unsplash.com/photo-1502920917128-1c1a1c7e6f?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80",
     images: [
-      "https://images.unsplash.com/photo-1502920917128-1c1a1c7e6f?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80",
     ],
     stock: 0,
     rating: 4.6,
