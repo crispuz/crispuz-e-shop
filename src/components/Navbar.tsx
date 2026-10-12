@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Button from "./Button";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/useAuth";
+import { ChevronDown, ClipboardList, LogOut, UserRound } from "lucide-react";
 
 const links = [
   { to: "/", label: "Home" },
@@ -14,6 +15,7 @@ const links = [
 export default function Navbar() {
   const { user, warning, logOut } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -92,9 +94,62 @@ export default function Navbar() {
         {/* Auth */}
         <div className="text-sm text-muted-foreground">
           {user ? (
-            <Button size="sm" onClick={logOut}>
-              Logout
-            </Button>
+            <div className="relative">
+              <button
+                type="button"
+                aria-expanded={isProfileOpen}
+                aria-controls="profile-menu"
+                aria-label={`Profile menu for ${user.username}`}
+                onClick={() => setIsProfileOpen((open) => !open)}
+                className="flex items-center gap-2 rounded-full border border-border/30 bg-card/80 py-1.5 pl-1.5 pr-3 text-foreground transition-colors hover:border-primary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/15 text-primary">
+                  <UserRound size={17} aria-hidden="true" />
+                </span>
+                <span className="max-w-24 truncate text-sm font-medium sm:max-w-36">
+                  {user.username}
+                </span>
+                <ChevronDown
+                  size={16}
+                  aria-hidden="true"
+                  className={`transition-transform ${isProfileOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+              {isProfileOpen && (
+                <div
+                  id="profile-menu"
+                  className="absolute right-0 top-full z-50 mt-2 w-64 glass overflow-hidden rounded-2xl border border-border/40 hover:border-primary shadow-xl"
+                >
+                  <div className="border-b border-border/30 px-4 py-3">
+                    <p className="truncate font-semibold text-foreground">
+                      {user.fullname}
+                    </p>
+                    <p className="truncate text-xs text-muted-foreground">
+                      {user.email}
+                    </p>
+                  </div>
+                  <Link
+                    to="/orders"
+                    onClick={() => setIsProfileOpen(false)}
+                    className="flex w-full items-center gap-2 px-4 py-3 text-left text-sm text-foreground transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:bg-primary/10"
+                  >
+                    <ClipboardList size={16} aria-hidden="true" />
+                    My Orders
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsProfileOpen(false);
+                      logOut();
+                    }}
+                    className="flex w-full items-center gap-2 px-4 py-3 text-left text-sm text-red-400 transition-colors hover:bg-red-500/10 focus-visible:outline-none focus-visible:bg-red-500/10"
+                  >
+                    <LogOut size={16} aria-hidden="true" />
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
             <Link to="/login" className="px-2">
               <Button size="sm">Login</Button>

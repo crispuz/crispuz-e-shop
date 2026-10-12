@@ -9,6 +9,7 @@ import Cart from "./pages/Cart";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import AuthProvider from "./context/AuthContext";
+import Orders from "./pages/Orders";
 
 type Product = (typeof products)[number];
 type CartItem = { product: Product; quantity: number };
@@ -51,11 +52,16 @@ export default function App() {
               element={<Checkout onAddToCart={addToCart} />}
             />
             <Route
+              path="/checkout/:id"
+              element={<Checkout onAddToCart={addToCart} />}
+            />
+            <Route
               path="/cart"
               element={<Cart items={cartItems} onRemove={removeFromCart} />}
             />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/orders" element={<Orders />} />
 
             <Route
               path="*"

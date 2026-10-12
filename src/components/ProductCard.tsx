@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import Button from "./Button";
 
 interface ProductCardProps {
@@ -6,8 +7,10 @@ interface ProductCardProps {
   productName: string;
   description: string;
   price: number;
+  stock: number;
   details: string;
   addToCart: string;
+  detailsTo: string;
   onDetails?: () => void;
   onAddToCart?: () => void;
 }
@@ -17,8 +20,10 @@ export default function ProductCard({
   productName,
   description,
   price,
+  stock,
   details,
   addToCart,
+  detailsTo,
   onDetails,
   onAddToCart,
 }: ProductCardProps) {
@@ -47,54 +52,64 @@ export default function ProductCard({
         hover:glow-border
       "
     >
-      {/* Product Image */}
-      <div className="relative aspect-square overflow-hidden">
-        <img
-          src={image}
-          alt={productName}
-          className="
-            h-full
-            w-full
-            object-cover
-            transition-transform
-            duration-500
-            group-hover:scale-105
-          "
-        />
+      <Link
+        to={detailsTo}
+        aria-label={`View details for ${productName}`}
+        className="block rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+      >
+        {/* Product Image */}
+        <div className="relative aspect-square overflow-hidden">
+          <img
+            src={image}
+            alt={productName}
+            className="
+              h-full
+              w-full
+              object-cover
+              transition-transform
+              duration-500
+              group-hover:scale-105
+            "
+          />
 
-        {/* Image Overlay */}
-        <div
-          className="
-            pointer-events-none
-            absolute
-            inset-0
-            bg-linear-to-t
-            from-black/30
-            via-transparent
-            to-transparent
-          "
-        />
-      </div>
+          {/* Image Overlay */}
+          <div
+            className="
+              pointer-events-none
+              absolute
+              inset-0
+              bg-linear-to-t
+              from-black/30
+              via-transparent
+              to-transparent
+            "
+          />
+        </div>
 
-      {/* Product Information */}
-      <div className="flex flex-col gap-3 p-5">
-        {/* Product Name */}
-        <h2 className="text-xl font-semibold text-foreground group-hover:text-primary transition-all duration-300">
-          {productName}
-        </h2>
+        {/* Product Information */}
+        <div className="flex flex-col gap-3 p-5">
+          <h2 className="text-xl font-semibold text-foreground transition-all group-hover:text-primary">
+            {productName}
+          </h2>
+          <p className="line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+            {description}
+          </p>
+          <span className="text-xl font-bold text-primary">
+            TSh {price.toLocaleString()}
+          </span>
+          <span
+            className={`text-xs font-medium ${
+              stock > 0 ? "text-green-400" : "text-red-400"
+            }`}
+          >
+            {stock > 0 ? `${stock} in stock` : "Out of stock"}
+          </span>
+        </div>
+      </Link>
 
-        {/* Description */}
-        <p className="line-clamp-2 text-sm leading-relaxed text-muted-foreground">
-          {description}
-        </p>
-
-        {/* Price */}
-        <span className="text-xl font-bold text-primary">
-          TSh {price.toLocaleString()}
-        </span>
-
+      <div className="px-5 pb-5">
         {/* Buttons */}
-        <div className="mt-2 flex gap-3">
+        <div className="flex gap-3">
           <Button
             size="sm"
             variant="secondary"
@@ -108,9 +123,10 @@ export default function ProductCard({
             size="sm"
             variant="primary"
             className="flex-1 leading-tight"
+            disabled={stock <= 0}
             onClick={onAddToCart}
           >
-            {addToCart}
+            {stock > 0 ? addToCart : "Out of stock"}
           </Button>
         </div>
       </div>
